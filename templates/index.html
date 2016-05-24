@@ -1,0 +1,187 @@
+{% load staticfiles %}	
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="No-Cache">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="LunitFood">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <title>Funit</title>
+
+	<!-- Bootstrap & Font-awesome -->
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+
+	<!-- FullPage -->
+	<link href="{% static 'css/fullpage/jquery.fullPage.css' %}" rel="stylesheet">
+
+	<!-- Custom -->
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+    <!-- Favicon
+		<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
+		<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon.png">
+	-->
+</head>
+
+<body>
+	<div id="food_pick" class="row" style="display: none;">
+		<div class="col-xs-6">
+			<h1> 귀차니즘.. </h2>
+		</div>
+		<div class="col-xs-6">
+			<h1> 오랜만에 맛난거 </h2>
+		</div>
+		<div class="col-xs-6">
+			<h1> 아무곳이나 가자 </h2>
+		</div>
+		<div class="col-xs-6">
+			<h1> 효은님 안 나오신 날 </h2>
+		</div>
+		<div class="col-xs-6">
+			<h1> 여름에는! </h2>
+		</div>
+		<div class="col-xs-6">
+			<h1> 겨울에는! </h2>
+		</div>
+	</div>
+
+	<div id="food_map" class="row row-no-padding">
+		<!--
+			<div class="col-md-1" style="height: 100vw; background-color: #2C3542;">
+				<p class="tag-title">Menu</p>	
+			</div>
+		-->
+
+		<div class="col-xs-12 col-md-9">
+			<div class="col-xs-12 col-md-8">
+				<div id="map"></div>
+			</div>
+
+			<div id="menu-toggle">
+				<center><span class="glyphicon glyphicon-option-vertical" style="color:#fff;font-size:1.2em;line-height:2.5em;"></span></center>
+			</div>
+
+			<div id="food_list" class="col-xs-12 col-md-4" style="overflow: scroll; height: 100vh;">
+				<h2> Food List </h2>
+				<div id="query_result" style="padding: 10px; padding-bottom:15px;">
+				</div>
+			</div>
+		</div>
+
+		<div id="filter_list" class="col-xs-6 col-md-3" style="height: 100vh; background: #2C3542; overflow: auto;">
+			<ul style="padding-left: 0px;">
+				<div>
+					<h2 class="tag-title"> Funit </h2>
+					<hr class="tag-title"/>
+
+					<h4 class="tag-title">현재 필터 | <a id="init-param" class="init" href="#">초기화</a></h4>
+					<p class="tag-group">
+					<div id="current-filter" style="padding-left: 20px;"></div>
+					</p>
+					<div style="height:1px;width:100%;background:#333;margin-bottom:1em"></div>
+					<h5 class="tag-title">음식 종류</h5>
+					<p class="tag-group">
+						<span id="food-korean">
+							<button class="btn btn-primary">#한식</button>
+						</span>
+						<span id="food-chinese">
+							<button class="btn btn-primary">#중식</button>
+						</span>
+						<span id="food-japanese">
+							<button class="btn btn-primary">#일식</button>
+						</span>
+						<span id="food-eng">
+							<button class="btn btn-primary">#양식</button>
+						</span>
+						<br/>
+						<span id="food-fastfood">
+							<button class="btn btn-primary">#패스트푸드</button>
+						</span>
+						<span id="food-snack">
+							<button class="btn btn-primary">#분식</button>
+						</span>
+						<span id="food-bread">
+							<button class="btn btn-primary">#브래드</button>
+						</span>
+						<span id="food-asian">
+							<button class="btn btn-primary">#아시안</button>
+						</span>
+					</p>
+					<h5 class="tag-title">가격대(1만원 기준)</h5>
+					<p class="tag-group">
+						<span id="price-high">
+							<button class="btn btn-success">#초과</button>
+						</span>
+						<span id="price-normal">
+							<button class="btn btn-success">#적당</button>
+						</span>
+						<span id="price-cheap">
+							<button class="btn btn-success">#여유</button>
+						</span>
+					</p>
+					<h5 class="tag-title">맛</h5>
+					<p class="tag-group">
+						<span id="taste-spicy">
+							<button class="btn btn-warning">#매운</button>
+						</span>
+						<span id="taste-best">
+							<button class="btn btn-warning">#맛집</button>
+						</span>
+					</p>
+					<h5 class="tag-title">거리</h5>
+					<p class="tag-group">
+						<span id="distance-far">
+							<button class="btn btn-info">#멀다</button>
+						</span>
+						<span id="distance-close">
+							<button class="btn btn-info">#가깝다</button>
+						</span>
+					</p>
+					<h5 class="tag-title">기타</h5>
+					<p class="tag-group">
+						<span id="etc-many">
+							<button class="btn btn-default">#단체</button>
+						</span>
+						<span id="etc-delivery">
+							<button class="btn btn-default">#배달</button>
+						</span>
+					</p>
+				</div>
+			</ul>
+		</div>
+	</div>
+
+    <script type="text/javascript" src="https://apis.daum.net/maps/maps3.js?apikey=209f9a21cf89dc5e0caf58814bbdf0d1"></script>
+
+	<!-- Bootstrap & jQuery -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	
+	<!-- FullPage -->
+	<script src="{% static 'js/fullpage/jquery.fullPage.min.js' %}"></script>
+	
+	<!-- eChart -->
+	<script src="{% static 'js/echart/echarts-all.js' %}"></script>
+	
+	<!-- ChartJS -->
+	<script src="{% static 'js/chartjs/chart.min.js' %}"></script>
+	
+	<!-- Custom -->
+	<script src="{% static 'js/app.js' %}"></script>
+    
+    <!-- Menu Toggle Script -->
+    <script>
+
+    </script>
+</body>
+
+</html>

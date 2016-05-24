@@ -1,0 +1,4 @@
+LunitFood/
+*.pyc
+static_files/
+logs/
